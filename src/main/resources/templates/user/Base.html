@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+   	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" \integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title th:text="${title}">Base - Smart Contact Manager</title>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+</head>
+<body>
+	<!-- THIS IS NAVBAR -->
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" style="background: #008080 !important;">
+	    <a class="navbar-brand " href="#">Smart Contact Manager</a>
+	    
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    
+	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	      <ul class="navbar-nav mr-auto text-uppercase forposition">
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+	        </li>
+
+	        <li class="nav-item">
+	          <a class="nav-link"  tabindex="-1" aria-disabled="true"><span th:text="${user.name}"></span></a>
+	        </li>
+	        
+	         <li class="nav-item">
+	          <a class="nav-link" th:href="@{/logout}" tabindex="-1" aria-disabled="true">Logout</a>
+	        </li>
+	        
+	      </ul>	     
+	    </div>
+	</nav>
+	<!-- END OF NAVBAR -->
+
+	<!-- Sidebar of user -->
+   	<div class="sidebar mt-2">
+   		<span onclick="toggleSidebar()" class="crossBtn">&times;</span> <!-- onclick="toggleSidebar()" -->
+   		<div class="divider"></div>
+   		<a id="home-link" th:href="@{/user/index}" class="item"><i class="fas fa-home"></i> Home</a> 
+   		<a id="showcontact-link" th:href="@{/user/showcontact/0}" class="item"><i class="fas fa-id-card-alt"></i> View Contacts</a>
+   		<a id="addcontact-link" th:href="@{/user/addcontact}" class="item"><i class="fas fa-pencil-alt"></i> Add Contact</a>
+   		<a id="userprofile-link" th:href="@{/user/userprofile}" class="item"><i class="fas fa-user-circle"></i> Your Profile</a>
+   		<a id="Setting-link" th:href="@{/user/settings}" class="item"><i class="fas fa-cogs"></i> Settings</a>
+   		<a th:href="@{/logout}" class="item"><i class="fas fa-sign-out-alt"></i> Exit</a>   		   		
+   		<div class="divider"></div>   		
+   	</div>
+	<!-- End Sidebar of user -->
+	
+	<!-- content of user -->
+	<div class="content mt-5">
+		 <i onclick="toggleSidebar()" style="cursor: pointer; margin-top:20px;" class="fas fa-bars "></i> <!-- onclick="toggleSidebar()" -->
+		 
+		 <!-- MESSAGE BOX -->
+		 <div th:if="${session.message}" class="container">
+		 	<div th:classappend="${'alert-'+session.message.type}" class="alert text-center" role="alert">
+			  <span th:text=${session.message.content}></span>
+			</div>
+			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		 </div>
+		 <div th:replace="${content}"></div>
+	</div>
+	<!-- End content of user -->
+	
+	<script>
+		function deletecontact(cid)
+		{
+			swal({
+				  title: "Are you sure?",
+				  text: "You want to delete this contact..",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+					window.location="/user/deletecontact/"+cid;
+				    swal("Poof! Your imaginary file has been deleted!", {
+				      icon: "success",
+				    });
+				  } else {
+				    swal("Your contact is safe..!");
+				  }
+				});
+		}
+	</script>
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>	
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>	
+	<script th:src="@{/js/script.js}">	</script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>	
+  </body>
+</html>

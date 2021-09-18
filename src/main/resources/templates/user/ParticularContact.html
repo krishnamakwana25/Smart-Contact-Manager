@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/Base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}">Home - Smart Contact Manager</title>
+</head>
+<body>
+	<section>
+		<h1> Contact Details</h1>
+		<!-- this code is work when logged user tries to view contact details of its own contacts  (generally this is error msg to logged user)-->
+		<div class="card card1" th:if="${contact}">		
+			<div class="card-body">
+				<div class="container text-center">
+					<img class="onecontactprofile " src="" th:src="@{'/images/'+${contact.img}}"/>
+					<h3 class="mt-3">
+						<span th:text="${contact.name}"> </span>
+						<span th:text="${contact.secondname}"> </span>
+						<hr />
+					</h3>	
+					<table class="table table-responsive-sm">
+					  <thead>
+					    <tr>
+					      <th scope="col">#ID</th>
+					      <th scope="col">
+					      	<span th:text="'SCMContact2021-'+${contact.cid}"></span>
+					      </th>
+					    </tr>
+					      
+					    <tr>
+					      <th scope="col">Email Address</th>
+					      <th scope="col">
+					  	 	<span th:text="${contact.email}"></span>
+					      </th>							      
+					    </tr>
+					    
+					     <tr>
+					      <th scope="col">phone No.</th>
+					      <th scope="col">
+					  	 	<span th:text="${contact.phone}"></span>
+					      </th>							      
+					    </tr>
+					    
+					    <tr>
+					      <th scope="col">Work</th>
+					      <th scope="col">
+					  	 	<span th:text="${contact.work}"></span>
+					      </th>							      
+					    </tr>
+					   </thead>
+					  <tbody>						   		
+					  </tbody>
+					</table>		
+					
+					<div class="decription">
+						<th:block th:utext="${contact.description}">  
+						<!-- th:utext :- to resolve the html code which iis in db -->
+						</th:block>
+					</div><br />
+						
+					<div class="container">	
+				
+						<form method="post" th:action="@{'/user/updatecontact/'+${contact.cid}}">
+				      		<button type="submit" class="btn sizeofbtn btn-info btn-md text-white">Update</button>	
+				      	</form>				  	
+					   	<button th:onclick="|deletecontact(${contact.cid})|" 
+					    class="btn btn-danger btn-md sizeofbtn text-white mt-3"> Delete </button>
+																		      	
+					</div>
+				</div><br />
+				<a th:href="@{/user/showcontact/0}" > 
+		      		<button class="btn btn-info btn-md text-white"> Go Back </button>
+				</a>
+			</div>		
+		</div>
+				<!-- this code is work when logged user tries to view contact details of other user (generally this is error msg to logged user)-->
+		<div class="container">				
+			<h1 class="text-center p-3 text-white bg-warning" th:unless="${contact}">
+				You don't have permission to view this contact
+			</h1>			
+		</div>
+		
+		<script>
+			/* alert("hello") */
+			$(document).ready(() =>{
+				$(".item").removeClass("active");
+				$("#showcontact-link").addClass("active");
+				
+			});			
+		</script>
+		
+	</section>	
+</body>
+</html>

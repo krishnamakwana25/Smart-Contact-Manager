@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/Base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}">Home - Smart Contact Manager</title>
+</head>
+<body>
+	<section>
+		<div class="card card1">
+			<div class="card-body">
+				<h1 class="text-center">Update Contact</h1>
+					<div class="container-fluid mt-1">
+						<div class="row">
+							<div class="col-md-10 offset-md-1">
+								<form action=""
+								th:object="${contact}"
+								enctype="multipart/form-data"
+								method="post" 
+								th:action="@{/user/process-updatedata}" 
+								class="mt-2">
+										<input type="hidden" th:value="${contact.cid}" name="cid"/> 
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="input-group-text plusforaddcontact">
+													<i class="fa fa-plus"></i>													
+												</div>
+											</div>	
+											<input th:value="${contact.name}" required type="text" id="name" name="name" placeholder="Enter Name here" class="form-control"/>										
+										</div>
+										
+										<div class="input-group mt-3">
+											<div class="input-group-prepend">
+												<div class="input-group-text plusforaddcontact">
+													<i class="fas fa-user-alt"></i>													
+												</div>
+											</div>	
+											<input th:value="${contact.secondname}" required type="text" id="secondname" name="secondname" placeholder="Enter Second Name here" class="form-control"/>										
+										</div>										
+										
+										<div class="input-group mt-3">
+											<div class="input-group-prepend">
+												<div class="input-group-text plusforaddcontact">
+													<i class="fas fa-phone"></i>													
+												</div>
+											</div>	
+											<input  th:value="${contact.phone}"  required type="number" min="10" maxlength="10" id="phone" name="phone" placeholder="Enter Phone Number here" class="form-control"/>										
+										</div>
+										
+										<div class="input-group mt-3">
+											<div class="input-group-prepend">
+												<div class="input-group-text plusforaddcontact">
+													@											
+												</div>
+											</div>	
+											<input th:value="${contact.email}" required type="email" id="email" name="email" placeholder="Enter Email here" class="form-control"/>										
+										</div>
+										
+										<div class="input-group mt-3">
+											<div class="input-group-prepend">
+												<div class="input-group-text plusforaddcontact">
+													<i class="fas fa-briefcase"></i>													
+												</div>
+											</div>	
+											<input  th:value="${contact.work}" required type="text" id="work" name="work" placeholder="Enter Work here" class="form-control"/>										
+										</div>							
+										
+										<div class="form-group mt-3">											
+											<textarea th:text="${contact.description}" name="description" id="mytextarea" class="form-control" placeholder="Enter your contact description" cols="30" rows="15"></textarea>										
+										</div>
+										
+										<div class="container text-center">
+											<img class="img-fluid onecontactprofile" src="" th:src="@{'/images/'+${contact.img}}"/>
+										</div>
+										
+										<div class="custom-file mt-3">
+											<input type="file" name="profileImage"/>
+											<p class="text-secondary">Choose new profile picture</p>
+										</div>
+										
+										<div class="container text-center mt-3">
+											<button class="btn btn-outline-success btn-lg  ">
+												Save Contact
+											</button>
+										</div>
+								</form>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>		
+		<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<script>
+	      tinymce.init({
+	        selector: '#mytextarea'
+	      });
+	    </script>
+	    		<script>
+			/* alert("hello") */
+			$(document).ready(() =>{
+				$(".item").removeClass("active");
+				$("#showcontact-link").addClass("active");
+				
+			});			
+		</script>
+	</section>	
+</body>
+</html>

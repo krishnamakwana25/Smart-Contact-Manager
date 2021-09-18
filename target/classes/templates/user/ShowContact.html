@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/Base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}">Home - Smart Contact Manager</title>
+</head>
+<body>
+	<section>
+		<div class="card ">
+			<div class="card-body">
+				<!-- <hr> -->
+					<span th:if="${TotalPages == 0}">
+						<h3 class="text-center">
+							Oops..! <br>You don't have any contact, So add your contact here..
+							<a th:href="@{/user/addcontact}"><br>Add Contact</a>
+						</h3><hr>
+					</span>
+			<div th:if="${TotalPages != 0}">
+				<h1 class="text-center">
+					Your Contacts
+				</h1><!-- <hr> -->
+				
+				<!-- SEARCH FUNCTIOBALITY -->
+				<div class="search-container my-3">
+					<input onkeyup="search()" type="text" id="search-input" class="form-control" placeholder="Search Your Contact"/>
+						<div class="search-result">
+							
+						</div>				
+				</div>
+				<!-- SEARCH FUNCTIOBALITY OVER -->
+				<table class="table  table-hover table-responsive">
+				  <thead class="thead-light">
+				    <tr>
+				      <th scope="col">Contacts Id</th>
+				      <th scope="col">Name</th>				      
+				      <th scope="col">Email Address</th>
+				      <th scope="col">Phone No.</th>
+				      <th scope="col">Photo</th>
+				      <th scope="col">Update Contact</th>
+				      <th scope="col">Delete Contact</th>
+				      <th scope="col">View Contact</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  
+				    <tr th:each="c : ${contacts}">
+				      <td scope="row" th:text="'SCMContact2021-'+${c.cid}"></td>
+				      <td>
+				      	<img class="myprofile" src="" th:src="@{'/images/'+${c.img}}"/>
+				      	<span th:text="${c.name}"></span> 
+				      	<span th:text="${c.secondname}"></span>
+				      </td>
+				      
+				      <td th:text="${c.email}"></td>				      
+				      <td th:text="${c.phone}"></td>
+				      <td th:text="${c.phone}"></td>
+				      
+				     		   	  
+						  <td>
+					    	  <form method="post" th:action="@{'/user/updatecontact/'+${c.cid}}">
+					      		<button type="submit" class="btn btn-info btn-sm">Update</button>	
+					      	</form>	
+					      </td>
+					      
+					      <td>
+				      		<a th:onclick="|deletecontact(${c.cid})|" class="">  <!-- 2nd way to link --> 
+					      	<!-- th:href="@{'/user/deletercontact/'+${c.cid}}"  -->
+					      		<button class="btn btn-danger btn-sm">Delete</button>
+					      	</a>
+					      </td>
+					      
+					      <td>
+					      	<a th:href="@{'/user/'+${c.cid}+'/particularcontact'}"> 	<!--1st way to link--> 
+					      	  <!--<a th:href="@{'/user/particularcontact/'+${c.cid}}">   <!-- 2nd way to link -->
+					      		<button class="btn btn-primary btn-sm">View</button>
+					      	</a>
+					      </td>    							     					      					    					    
+				   	
+				    </tr>			    				    
+				  </tbody>
+				</table>
+			</div>
+				<!-- PAGINATION  -->
+			<div th:if="${TotalPages != 0}">
+				<nav aria-label="...">				
+				  <ul class="pagination">
+				    <li class="page-item " th:if="${CurrentPage != 0}">
+				      <a class="page-link" href="#" tabindex="-1"  th:href="@{'/user/showcontact/'+${CurrentPage-1}}">
+				      	Previous
+				      </a>
+				    </li>
+				    <li th:classappend="${CurrentPage == i-1 ? 'active' : '' }" 
+				    th:each="i:${#numbers.sequence(1,TotalPages)}" 
+				    class="page-item">
+				    	<a class="page-link" th:href="@{'/user/showcontact/'+${i-1}}">
+				    		<span th:text=${i}></span>
+				    	</a>
+				   </li>				    
+				    <li class="page-item" th:if="${CurrentPage+1 != TotalPages}">
+				      <a class="page-link" th:href="@{'/user/showcontact/'+${CurrentPage+1}}">
+				      	Next
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			</div>
+				<!-- PAGINATION OVER -->				
+			</div>
+		</div>
+		<script>
+			/* alert("hello") */
+			$(document).ready(() =>{
+				$(".item").removeClass("active");
+				$("#showcontact-link").addClass("active");
+				
+			});			
+		</script>
+	</section>	
+</body>
+</html>

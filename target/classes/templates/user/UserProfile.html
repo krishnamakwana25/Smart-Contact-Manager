@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/Base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}">Home - Smart Contact Manager</title>
+</head>
+<body>
+	<section>		
+		<div class="container">
+			<div class="card card1">
+				<div class="card-body">
+					<div class="container text-center">
+						<img class="onecontactprofile " src="" th:src="@{'/images/'+${user.imgurl}}"/>
+					</div>
+				
+					<h1 class="text-center mt-3" th:text="${user.name}"> </h1> <hr />
+					<table class="table text-center table-responsive-sm">
+					  <thead>
+					    <tr>
+					      <th scope="col">#USERID</th>
+					      <th scope="col">
+					      	<span th:text="'SCMUser2021-'+${user.id}"></span>
+					      </th>
+					    </tr>
+					      
+					    <tr>
+					      <th scope="col">Email Address</th>
+					      <th scope="col">
+					  	 	<span th:text="${user.email}"></span>
+					      </th>							      
+					    </tr>
+					    
+					     <tr>
+					      <th scope="col">Role</th>
+					      <th scope="col">
+					  	 	<span th:text="${user.role}"></span>
+					      </th>							      
+					    </tr>
+					    
+					    <tr>
+					      <th scope="col">Account Active</th>
+					      <th scope="col">
+					  	 	<span th:text="${user.enabled}"></span>
+					      </th>							      
+					    </tr>
+					    
+					     <tr>
+					      <th scope="col">About</th>
+					      <th scope="col">
+					  	 	<span th:text="${user.about}"></span>
+					      </th>							      
+					    </tr>
+					   </thead>
+					  <tbody>						   		
+					  </tbody>
+					</table>	
+				</div>
+			</div>
+		</div>
+		<script>
+			/* alert("hello") */
+			$(document).ready(() =>{
+				$(".item").removeClass("active");
+				$("#userprofile-link").addClass("active");
+				
+			});			
+		</script>		
+	</section>	
+</body>
+</html>

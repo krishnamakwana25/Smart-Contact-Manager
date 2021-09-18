@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="Base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}">Home - Smart Contact Manager</title>
+</head>
+<body>
+	<section>
+		<div class="container ">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my_card mt-1">
+						
+							<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+							  <p class="text-center" th:text="${session.message.content}"></p>
+							  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+							</div>
+						<div class="container text-center">
+							<img style="width:80px" th:src="@{/images/note.png}" alt="" />						
+						</div>
+						
+						<h1 class="text-center">SignUp Here</h1>
+						<form th:action="@{/do_signup}" method="post" class="" th:object="${user}">
+							<!-- novalidate="novalidate" -->
+						  <div class="mb-3">
+						    <label for="name_field" class="form-label">Your Name</label>
+						    <input type="text"
+						     class="form-control" 
+						     id="name_field" 
+						     name="name"
+						     th:value="${user.name}"
+						     th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+						     aria-describedby="emailHelp" placeholder="Enter Your Name" required>
+						      <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+						   	
+						      </div>						    
+						  </div>
+						  
+						  <div class="mb-3">
+						    <label for="email_field" class="form-label">Your Email</label>
+						    <input type="email"
+						     class="form-control" 
+						     id="email_field"
+						     name="email"
+						     th:value="${user.email}" 
+						     aria-describedby="emailHelp" placeholder="Enter Your Email" required>						    
+						  </div>
+						  
+						  <div class="mb-3">
+						    <label for="password_field" class="form-label">Password</label>
+						    <input type="password" 
+						    class="form-control"
+						    name="pwd"
+						    id="password_field" placeholder="Enter Your Password">
+						  </div>
+						  
+						  <div class="form-group">
+						  	<textarea th:text="${user.about}" name="about" id="about_field"  rows="6" class="form-control" placeholder="Enter About Yourself"></textarea>
+						  </div>
+						  
+						  <div class="formgroup form-check mt-1">
+						  	<input type="checkbox" name="agreement" class="form-check-input" id="agreement" />
+						  	<label for="agreement">Accept Terms & Conditions</label>
+						  </div>
+						  
+						  <div class="container text-center mt-3" >
+						  	<button type="submit" class="btn bg-primary text-white ">
+						  		Submit
+						  	</button>
+						  	<button type="reset" class="btn btn-warning text-white ms-1 ">
+						  		Reset
+						  	</button>
+						  </div>													
+						</form>
+					</div>			
+				</div>
+			</div>
+		</div>
+	</section>	
+</body>
+</html>
